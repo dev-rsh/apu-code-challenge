@@ -1,0 +1,9 @@
+host: :50053
+service1host: service1:50051
+service2host: service2:50052
+database:
+  username: postgres
+  password: 1234567890
+  host: postgres
+  port: 5432
+  databasename: grpc-challenge

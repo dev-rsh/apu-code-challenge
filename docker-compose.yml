@@ -1,0 +1,46 @@
+version: '3'
+services:
+  service1:
+    image: service1:latest
+    build:
+      context: .
+      dockerfile: ./service1/deployment/Dockerfile
+    networks:
+      - grpc-net
+
+  service2:
+    image: service2:latest
+    build:
+      context: .
+      dockerfile: ./service2/deployment/Dockerfile
+    networks:
+      - grpc-net
+
+  service3:
+    image: service3:latest
+    build:
+      context: .
+      dockerfile: ./service3/deployment/Dockerfile
+    depends_on:
+      - service1
+      - service2
+      - postgres
+    ports:
+      - "50053:50053"
+    networks:
+      - grpc-net
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: 1234567890
+      POSTGRES_DB: grpc-challenge
+    volumes:
+      - ./service3/deployment/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5434:5432"
+    networks:
+      - grpc-net
+
+networks:
+  grpc-net:

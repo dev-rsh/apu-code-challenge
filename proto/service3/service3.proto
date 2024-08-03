@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package service3;
+
+option go_package = "services-challenge/proto/service3";
+
+service Service3 {
+  rpc GetResult(Empty) returns (ResultResponse) {}
+}
+
+message Empty {}
+
+message ResultResponse {
+  string service1_data = 1;
+  string service2_data = 2;
+}
